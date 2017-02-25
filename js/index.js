@@ -245,9 +245,9 @@ function myFunction() {
     random(DMIN, DMAX), 
     random(EMIN, EMAX), hop.numPoints);
 
-}, 4000);
+}, 1);
 }
 
 
-  // location.reload();
+
 }
