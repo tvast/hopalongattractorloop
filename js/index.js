@@ -25,15 +25,15 @@ var hop = {
  */
 
 var AMAX = 30,
-    AMIN = -30,
-    BMAX = 1.8,
-    BMIN = 0.2,
-    CMAX = 15,
-    CMIN = 4,
-    DMIN = 0,
-    DMAX = 10,
-    EMIN = 0,
-    EMAX = 11;
+  AMIN = -30,
+  BMAX = 1.8,
+  BMIN = 0.2,
+  CMAX = 15,
+  CMIN = 4,
+  DMIN = 0,
+  DMAX = 10,
+  EMIN = 0,
+  EMAX = 11;
 
 /** 
  * Hopalong Strange Attractor 
@@ -45,22 +45,22 @@ var AMAX = 30,
 
 function hopalong(a, b, c, d, e, N) {
   var x,
-      y,
-      z,
-      xl,
-      xmin,
-      ymin,
-      xmax,
-      ymax,
-      xx,
-      yy,
-      xy = {
-    sets: [],
-    yMin: 0,
-    yMax: 0,
-    xMin: 0,
-    xMax: 0
-  };
+    y,
+    z,
+    xl,
+    xmin,
+    ymin,
+    xmax,
+    ymax,
+    xx,
+    yy,
+    xy = {
+      sets: [],
+      yMin: 0,
+      yMax: 0,
+      xMin: 0,
+      xMax: 0
+    };
 
   // hopalong object split into layers
   for (var sub = 0; sub < hop.layers; sub++) {
@@ -82,7 +82,7 @@ function hopalong(a, b, c, d, e, N) {
       // orbit
       z = d + sqrt(abs(b * x - c));
 
-      if (x > 0) xx = y - z;else if (x == 0) xx = y;else xx = y + z;
+      if (x > 0) xx = y - z; else if (x == 0) xx = y; else xx = y + z;
 
       y = a - x;
       x = xx + e;
@@ -116,11 +116,11 @@ function hopalong(a, b, c, d, e, N) {
 function drawHopalong(XY) {
   var x, y, yc, xc, c, zshift, thisset;
   var sep = hop.layerSeparation,
-      scale,
-      r = hop.drawWidth;
+    scale,
+    r = hop.drawWidth;
 
   // Canvas
-  if (height < width) scale = height * 0.75 / (XY.yMax - XY.yMin);else scale = width * 0.75 / (XY.xMax - XY.xMin);
+  if (height < width) scale = height * 0.75 / (XY.yMax - XY.yMin); else scale = width * 0.75 / (XY.xMax - XY.xMin);
   scale /= 1;
   yc = abs(XY.yMin) * scale + centerY - (XY.yMax - XY.yMin) / 2 * scale;
   xc = abs(XY.xMin) * scale + centerX - (XY.xMax - XY.xMin) / 2 * scale;
@@ -159,15 +159,15 @@ function drawHopalong(XY) {
  * P5.js
  */
 var img,
-    centerX,
-    centerY,
-    sign = Math.sign,
-    hopa;
+  centerX,
+  centerY,
+  sign = Math.sign,
+  hopa;
 
 var cameraz = 0,
-    camerax = 0,
-    cameray = 0,
-    tick = 80;
+  camerax = 0,
+  cameray = 0,
+  tick = 80;
 
 /* */
 function setup() {
@@ -176,10 +176,9 @@ function setup() {
   background(0);
 
   // set p5 draw options
-  colorMode(HSL, 360, 100, 100, 1);
-  ellipseMode(CENTER);
+  colorMode(HSL, 100, 400, 450, 2);
+  ellipseMode(LEFT);
   frameRate(hop.frameRate);
-  noStroke();
 
   centerX = width / 2;
   centerY = height / 2;
@@ -197,56 +196,36 @@ function draw() {
   // ambientLight(60);
 
   // reset camera
-  // if (cameraz < -1 * hop.layerSeparation * (hop.layers + 1)) {
-  //   hopa = hopalong(random(AMIN, AMAX),
-  //                 random(BMIN, BMAX),
-  //                 random(CMIN, CMAX),
-  //                 random(DMIN, DMAX),
-  //                 random(EMIN, EMAX),
-  //                 hop.numPoints);
-  //   tick = 80;
-  // }
+  if (cameraz < -1 * hop.layerSeparation * (hop.layers + 1)) {
+    hopa = hopalong(random(AMIN, AMAX),
+      random(BMIN, BMAX),
+      random(CMIN, CMAX),
+      random(DMIN, DMAX),
+      random(EMIN, EMAX),
+      hop.numPoints);
+    tick = 80;
+  }
 }
 
 
 
 
 
-/**
-* Handlers 
-*/
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-  background(0);
-  centerX = width / 2;
-  centerY = height / 2;
-}
 
-function mouseMoved() {
-  camerax = mouseX - width/2;
-  cameray = mouseY - height/2;
-}
-
-function mouseClicked() {
-  hopa = hopalong(random(AMIN, AMAX), 
-    random(BMIN, BMAX), 
-    random(CMIN, CMAX), 
-    random(DMIN, DMAX), 
-    random(EMIN, EMAX), hop.numPoints);
-}
 
 function myFunction() {
-  var i=0
-  for (i = 0; i < 5000; i++) { 
-      setInterval(function(){ 
-   hopa = hopalong(random(AMIN, AMAX), 
-    random(BMIN, BMAX), 
-    random(CMIN, CMAX), 
-    random(DMIN, DMAX), 
-    random(EMIN, EMAX), hop.numPoints);
+  var i = 0
+  for (i = 0; i < 5000; i++) {
+    setTimeout(function () {
+      hopa = hopalong(random(AMIN, AMAX),
+        random(BMIN, BMAX),
+        random(CMIN, CMAX),
+        random(DMIN, DMAX),
+        random(EMIN, EMAX), hop.numPoints);
 
-}, 1);
-}
+    }, 1);
+
+  }
 
 
 
